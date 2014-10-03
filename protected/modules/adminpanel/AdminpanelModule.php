@@ -2,6 +2,8 @@
 
 class AdminpanelModule extends CWebModule
 {
+    protected $_allowedActions = array('login','logout');
+    
 	public function init()
 	{
 		// this method is called when the module is being created
@@ -20,11 +22,32 @@ class AdminpanelModule extends CWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
-			// this method is called before any module controller action is performed
-			// you may place customized code here
+            
+			if (Yii::app()->user->isGuest && !$this->checkAllowedAction($action)) {
+                $url = Yii::app()->createAbsoluteUrl($this->getAdminpanelUrl().'/login',
+                        array('redirect' => Yii::app()->request->requestUri) );
+                Yii::app()->getRequest()->redirect($url,true,302);
+            }
+            
 			return true;
 		}
 		else
 			return false;
 	}
+
+    public function getAdminpanelUrl()
+    {
+        return $this->getId();
+    }
+
+    public function checkAllowedAction($action)
+    {
+        if (is_object($action)) {
+            $action = $action->getId();
+        }
+        return in_array($action, $this->_allowedActions);
+    }
 }
+
+
+//yii-grouk.dev5.oxagile.com/oxa-yii-test/adminpanel/admin/?fgfg=1&ee=2
