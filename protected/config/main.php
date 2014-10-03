@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Yii Application',
+	'name'=>'OxaBook Yii Project',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -23,9 +23,9 @@ return array(
 
 		'gii'=>array(
 			'class'=>'system.gii.GiiModule',
-			'password'=>'some_password',
+			'password'=>'giipasswd',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			'ipFilters'=>array('127.0.0.1','::1','192.168.33.172'),
+			//'ipFilters'=>array('127.0.0.1','::1','192.168.33.172'),
 		),
 
 	),
