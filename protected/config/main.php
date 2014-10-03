@@ -25,8 +25,11 @@ return array(
 			'class'=>'system.gii.GiiModule',
 			'password'=>'giipasswd',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
-			//'ipFilters'=>array('127.0.0.1','::1','192.168.33.172'),
+		    'ipFilters'=>array('127.0.0.1','::1','192.168.*'),
 		),
+        'adminpanel'=>array(
+            'defaultController'=>'admin',
+        ),
 
 	),
 
@@ -45,6 +48,7 @@ return array(
                 '' => 'site/index',
                 '<view:(about)>' => 'site/page',
                 '<action:(login|logout|contact)>' => 'site/<action>',
+                '<module:(adminpanel)>/<action:(login|logout)>' => '<module>/admin/<action>',
 				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
