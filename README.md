@@ -1,7 +1,6 @@
 oxa-yii-test
 ============
 
-oxa-yii-test readme
 
 
 To start project you require to create file with local configuration: 
@@ -27,7 +26,8 @@ return array(
 
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'on-village-to-grandfa@oxagile.com',
+		'adminEmail'=>'on-a-village-to-grandpa@oxagile.com',
 	),
 );
 ```
+After creating this file you can easily rewrite all configuration params with the same as original syntax
