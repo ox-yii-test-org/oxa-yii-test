@@ -6,3 +6,4 @@
 assets/*
 protected/runtime/*
 protected/tests/report/*
+protected/config/local_config.php
