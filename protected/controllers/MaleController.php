@@ -32,7 +32,7 @@ class MaleController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','loadImage'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -69,7 +69,12 @@ class MaleController extends Controller
 
 		if(isset($_POST['Male'])) {
 			$model->attributes = $_POST['Male'];
-            $this->saveImageModel($model);
+            $uploadImage = CUploadedFile::getInstance($model, 'image');
+            $model->image = file_get_contents($uploadImage->getTempName());
+
+            if($model->save()) {
+                $this->redirect(array('view', 'id'=>$model->id));
+            }
 		}
 
 		$this->render('create',array(
@@ -91,7 +96,12 @@ class MaleController extends Controller
 
 		if(isset($_POST['Male'])) {
 			$model->attributes = $_POST['Male'];
-            $this->saveImageModel($model, $model->image);
+            $uploadImage = CUploadedFile::getInstance($model, 'image');
+            $model->image = $uploadImage ? file_get_contents($uploadImage->getTempName()) : $model->image;
+
+            if($model->save()) {
+                $this->redirect(array('view', 'id'=>$model->id));
+            }
 		}
 
 		$this->render('update',array(
@@ -167,26 +177,19 @@ class MaleController extends Controller
 		}
 	}
 
-    public function saveImageModel($model, $usedImage = null)
-    {
-        $uploadImage = CUploadedFile::getInstance($model, 'image');
-        $filename = $uploadImage ? time() . '-' . $uploadImage->getName() : $usedImage;
-        $model->image = $filename;
-        $uploadDir = UrlHelper::getFileUploadPath($model);
-
-        if($model->save()) {
-            if (!file_exists($uploadDir)) {
-                mkdir($uploadDir, 0775, true);
-            }
-            if ($uploadImage) {
-                $uploadImage->saveAs($uploadDir . $filename);
-            }
-            $this->redirect(array('view', 'id'=>$model->id));
-        }
-    }
-
     public function getStatusView($model)
     {
         return ViewHelper::getMaleStatus($model->status);
+    }
+
+    public function actionloadImage($id)
+    {
+        $model = $this->loadModel($id);
+        $this->renderPartial(
+            'image',
+            array(
+                'model' => $model
+            )
+        );
     }
 }

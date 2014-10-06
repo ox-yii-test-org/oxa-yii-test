@@ -23,7 +23,7 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('image')); ?>:</b>
     <?php if($data->image) {?>
-        <?php echo CHtml::image(UrlHelper::getFileViewPath($data) . $data->image, 'image', array('width' => 200));?>
+        <?php echo CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $data->id)), 'image', array('width' => 200));?>
     <?php }?>
 	<br />
 </div>

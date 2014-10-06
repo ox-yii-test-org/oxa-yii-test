@@ -46,7 +46,7 @@
 
     <?php if(!$model->isNewRecord && $model->image) {?>
         <div class="row">
-            <?php echo CHtml::image(UrlHelper::getFileViewPath($model) . $model->image, 'image', array('width' => 200));?>
+            <?php echo CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $model->id)), 'image', array('width' => 200));?>
         </div>
     <?php }?>
 
