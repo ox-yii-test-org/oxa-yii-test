@@ -31,7 +31,7 @@ $this->menu=array(
         array(
             'name' => 'image',
             'type' => 'raw',
-            'value' => CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $model->id)), 'image', array('width' => 200))
+            'value' => $model->image ? CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $model->id)), 'image', array('width' => 200)) : ''
         ),
 	),
 )); ?>

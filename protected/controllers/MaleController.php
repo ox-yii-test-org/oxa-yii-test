@@ -70,7 +70,10 @@ class MaleController extends Controller
 		if(isset($_POST['Male'])) {
 			$model->attributes = $_POST['Male'];
             $uploadImage = CUploadedFile::getInstance($model, 'image');
-            $model->image = file_get_contents($uploadImage->getTempName());
+
+            if ($uploadImage) {
+                $model->image = file_get_contents($uploadImage->getTempName());
+            }
 
             if($model->save()) {
                 $this->redirect(array('view', 'id'=>$model->id));
