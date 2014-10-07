@@ -39,7 +39,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-<?php //var_dump($model);exit();?>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'male-grid',
 	'dataProvider'=>$model->search(),
@@ -49,7 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'name',
         array(
             'name' => 'status',
-            'value' => array($this, 'getStatusView'),
+            'value' => 'Male::getMaleStatus($data->status)',
             'filter' => array('1' => 'Active', '2' => 'Inactive'),
         ),
 		array(

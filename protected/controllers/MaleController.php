@@ -180,11 +180,6 @@ class MaleController extends Controller
 		}
 	}
 
-    public function getStatusView($model)
-    {
-        return ViewHelper::getMaleStatus($model->status);
-    }
-
     public function actionloadImage($id)
     {
         $model = $this->loadModel($id);
