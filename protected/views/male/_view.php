@@ -18,7 +18,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode(ViewHelper::getMaleStatus($data->status)); ?>
+	<?php echo CHtml::encode(Male::getMaleStatus($data->status)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('image')); ?>:</b>

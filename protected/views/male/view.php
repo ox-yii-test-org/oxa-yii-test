@@ -26,7 +26,7 @@ $this->menu=array(
 		'desc',
         array(
             'name' => 'status',
-            'value' => ViewHelper::getMaleStatus($model->status)
+            'value' => Male::getMaleStatus($model->status)
         ),
         array(
             'name' => 'image',

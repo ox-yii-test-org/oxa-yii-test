@@ -118,4 +118,16 @@ class Male extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public static function getMaleStatus($status)
+    {
+        switch($status) {
+            case self::ACTIVE_STATUS:
+                return 'Active';
+            case self::INACTIVE_STATUS:
+                return 'Inactive';
+            default:
+                return '';
+        }
+    }
 }
