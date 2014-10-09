@@ -46,7 +46,7 @@ class Male extends CActiveRecord
     public function beforeSave()
     {
         if ($this->isNewRecord) {
-            $this->hash = md5($this->name);
+            $this->hash = md5(time() . $this->name);
         }
 
         return parent::beforeSave();
@@ -100,8 +100,6 @@ class Male extends CActiveRecord
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('status',$this->status);
-		$criteria->compare('hash',$this->hash);
-		$criteria->compare('image',$this->image);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -23,7 +23,6 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'status'); ?>
-		<?php //echo $form->textField($model,'status'); ?>
 		<?php echo $form->dropDownList($model, 'status', array('1'=>'Active', '2'=>'Inactive'), array('options' => array($model->status => array('selected' => true))));?>
 	</div>
 
