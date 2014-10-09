@@ -106,22 +106,4 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
-
-    /**
-     * Displays the contracts page
-     */
-    public function actionContract()
-    {
-        $model=new ContractForm;
-        if(isset($_POST['ContractForm']))
-        {
-            $model->attributes=$_POST['ContractForm'];
-            if($model->validate())
-            {
-                Yii::app()->user->setFlash('contract','Target confirmed! Thanks for using our service.');
-                $this->refresh();
-            }
-        }
-        $this->render('contract',array('model'=>$model));
-    }
 }
