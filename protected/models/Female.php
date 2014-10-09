@@ -46,7 +46,7 @@ class Female extends CActiveRecord
     public function beforeSave()
     {
         if ($this->isNewRecord) {
-            $this->hash = md5($this->name);
+            $this->hash = md5(time() . $this->name);
         }
 
         return parent::beforeSave();
