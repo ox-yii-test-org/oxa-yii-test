@@ -16,7 +16,7 @@
 
                 <b><?php echo CHtml::encode($model->getAttributeLabel('image')); ?>:</b>
                 <?php if($model->image) {?>
-                    <?php echo CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $model->id)), 'image', array('width' => 200));?>
+                    <?php echo CHtml::image(Yii::app()->controller->createUrl($model->tableName() . '/loadImage', array('id' => $model->id)), 'image', array('width' => 200));?>
                 <?php }?>
                 <br />
             </div>
