@@ -17,3 +17,13 @@ div.loading * {
 #flash-msgs-custom .flash-success {
     display: none;
 }
+
+.compare-block .view {
+    width: 200px;
+    float: left;
+    margin-left: 150px;
+}
+
+.compare-info {
+    padding: 5px;
+}
