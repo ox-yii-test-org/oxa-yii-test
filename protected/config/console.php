@@ -33,6 +33,14 @@ return CMap::mergeArray(
                     ),
                 ),
             ),
+            'commandMap' => array(
+                'migrate' => array(
+                    'class'=>'system.cli.commands.MigrateCommand',
+                    'migrationPath' => 'application.migrations',
+                    'migrationTable' => 'migration',
+                    'connectionID'=>'db',
+                ),
+            ),
         ),
         include(dirname(__FILE__).'/local_config.php')
 );

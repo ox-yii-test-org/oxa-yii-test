@@ -1,22 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "Contract".
+ * This is the model class for table "Male".
  *
- * The followings are the available columns in table 'Contract':
+ * The followings are the available columns in table 'Male':
  * @property integer $id
- * @property integer $departmentId
- * @property integer $employeeId
- * @property string $executionDate
+ * @property string $name
+ * @property string $desc
+ * @property integer $status
+ * @property string $hash
+ * @property string $image
  */
-class Contract extends CActiveRecord
+class Male extends CActiveRecord
 {
+    const ACTIVE_STATUS = 1;
+    const INACTIVE_STATUS = 2;
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'Contract';
+		return 'male';
 	}
 
 	/**
@@ -27,13 +32,25 @@ class Contract extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('departmentId, employeeId', 'numerical', 'integerOnly'=>true),
-			array('executionDate', 'length', 'max'=>255),
+            array('status', 'numerical', 'integerOnly' => true),
+			array('name', 'length', 'max'=>40),
+			array('name', 'required'),
+			array('desc', 'safe'),
+            array('image', 'file', 'types'=>'jpg, gif, png', 'maxSize' => 4194304, 'allowEmpty' => true, 'on' => 'update'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, departmentId, employeeId, executionDate', 'safe', 'on'=>'search'),
+			array('id, name, desc, status, image', 'safe', 'on'=>'search'),
 		);
 	}
+
+    public function beforeSave()
+    {
+        if ($this->isNewRecord) {
+            $this->hash = md5(time() . $this->name);
+        }
+
+        return parent::beforeSave();
+    }
 
 	/**
 	 * @return array relational rules.
@@ -53,9 +70,11 @@ class Contract extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'departmentId' => 'Department',
-			'employeeId' => 'Employee',
-			'executionDate' => 'Execution Date',
+			'name' => 'Name',
+			'desc' => 'Desc',
+			'status' => 'Status',
+			'hash' => 'Hash',
+			'image' => 'Image',
 		);
 	}
 
@@ -78,9 +97,9 @@ class Contract extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('departmentId',$this->departmentId);
-		$criteria->compare('employeeId',$this->employeeId);
-		$criteria->compare('executionDate',$this->executionDate,true);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('desc',$this->desc,true);
+		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -91,10 +110,22 @@ class Contract extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Contract the static model class
+	 * @return Male the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
+    public static function getMaleStatus($status)
+    {
+        switch($status) {
+            case self::ACTIVE_STATUS:
+                return 'Active';
+            case self::INACTIVE_STATUS:
+                return 'Inactive';
+            default:
+                return '';
+        }
+    }
 }
