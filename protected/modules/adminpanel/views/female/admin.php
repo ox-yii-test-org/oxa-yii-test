@@ -39,13 +39,16 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 	'model'=>$model,
 )); ?>
 </div><!-- search-form -->
-
+dasgf
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'female-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
+        'id',
 		'name',
+        'count',
+        'rating',
 		array(
             'name' => 'status',
             'value' => 'Female::getFemaleStatus($data->status)',

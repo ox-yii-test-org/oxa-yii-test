@@ -5,7 +5,7 @@
                 echo CHtml::ajax(
                     array('url'=>$this->createUrl('/compare/index'),
                         'type'=>'POST',
-                        'data'=>array('id'=>'js:$(this).data("id")'),
+                        'data'=>array('id'=>'js:$(this).data("id")', 'looserId' => 'js:$(this).siblings(".view").data("id")', 'type' => 'js:$(this).parent(".compare-block").data("name")'),
                         'dataType' => 'json',
                         'success'=>'function(data){
                             if (data.message) {
@@ -43,4 +43,5 @@ $this->breadcrumbs=array(
 </div>
 <?php $this->renderPartial('blocks/compare_block',array(
     'models' => $models,
+    'model' => $model
 ));?>

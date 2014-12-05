@@ -39,7 +39,7 @@ class Male extends CActiveRecord
             array('image', 'file', 'types'=>'jpg, gif, png', 'maxSize' => 4194304, 'allowEmpty' => true, 'on' => 'update'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, desc, status, image', 'safe', 'on'=>'search'),
+			array('id, name, desc, status, count, image, rating', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,8 +59,10 @@ class Male extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+
 		return array(
-		);
+            'rating'=>array(self::STAT,  'male', 'id', 'select' => 'floor(count_winner/count*100)'),
+        );
 	}
 
 	/**
@@ -96,14 +98,24 @@ class Male extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->id, true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('desc',$this->desc,true);
 		$criteria->compare('status',$this->status);
+		$criteria->compare('count',$this->count, true);
+        $criteria->with=array('rating');
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+        $sort = new CSort();
+        $sort->defaultOrder = 'name DESC';
+        $sort->attributes = array('id', 'name', 'count', 'status', 'desc');
+        $sort->attributes['rating'] = array(
+            'asc' => 'floor(count_winner/count*100)',
+            'desc' => 'floor(count_winner/count*100) desc',
+        );
+        return new CActiveDataProvider($this, array(
+            'criteria'=>$criteria,
+            'sort'=>$sort
+        ));
 	}
 
 	/**

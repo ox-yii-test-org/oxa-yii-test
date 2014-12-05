@@ -1,21 +1,26 @@
-<div class="compare-block">
+<div class="compare-block" data-name="<?php echo $model; ?>">
     <?php if ($models):?>
-        <?php foreach ($models as $model):?>
-            <div class="view" data-id="<?php echo $model->id?>">
-                <?php if($model->image) :?>
-                    <?php echo CHtml::image(Yii::app()->controller->createUrl($model->tableName() . '/loadImage', array('id' => $model->id)), 'image', array('width' => 200));?>
+        <?php foreach ($models as $modelItem):?>
+            <div class="view" data-id="<?php echo $modelItem->id?>">
+                <?php if($modelItem->image) :?>
+<!--                    --><?php //echo CHtml::image(Yii::app()->controller->createUrl('male/loadImage', array('id' => $data->id)), 'image', array('width' => 200));?>
+                    <?php echo CHtml::image(Yii::app()->controller->createUrl('compare/loadImage', array('id' => $modelItem->id, 'type' => $model)), 'image', array('width' => 200));?>
                 <?php endif;?>
                 <div class="compare-info">
-                    <b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b>
-                    <?php echo CHtml::encode($model->name); ?>
+                    <b><?php echo CHtml::encode($modelItem->getAttributeLabel('name')); ?>:</b>
+                    <?php echo CHtml::encode($modelItem->name); ?>
                     <br />
 
-                    <b><?php echo CHtml::encode($model->getAttributeLabel('desc')); ?>:</b>
-                    <?php echo CHtml::encode($model->desc); ?>
+                    <b><?php echo CHtml::encode($modelItem->getAttributeLabel('desc')); ?>:</b>
+                    <?php echo CHtml::encode($modelItem->desc); ?>
                     <br />
 
-                    <b><?php echo CHtml::encode($model->getAttributeLabel('status')); ?>:</b>
-                    <?php echo CHtml::encode(Male::getMaleStatus($model->status)); ?>
+                    <b><?php echo CHtml::encode($modelItem->getAttributeLabel('status')); ?>:</b>
+                    <?php echo CHtml::encode(Male::getMaleStatus($modelItem->status)); ?>
+                    <br />
+
+                    <b><?php echo CHtml::encode($modelItem->getAttributeLabel('id')); ?>:</b>
+                    <?php echo CHtml::encode($modelItem->id); ?>
                     <br />
                 </div>
             </div>

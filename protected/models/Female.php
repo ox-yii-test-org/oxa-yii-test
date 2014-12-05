@@ -39,7 +39,7 @@ class Female extends CActiveRecord
             array('image', 'file', 'types'=>'jpg, gif, png', 'maxSize' => 4194304, 'allowEmpty' => true, 'on' => 'update'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('name, status, desc, image', 'safe', 'on'=>'search'),
+			array('name, status, desc, rating, count, image', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +60,8 @@ class Female extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+//            'uid'=>array(self::BELONGS_TO, 'сode', 'code_id'),
+             'rating'=>array(self::STAT,  'female', 'id', 'select' => 'floor(count_winner/count*100)'),
 		);
 	}
 
@@ -96,12 +98,28 @@ class Female extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('id',$this->id,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('desc',$this->desc,true);
+		$criteria->compare('count',$this->count,true);
+        $criteria->with = 'rating';
+//        $criteria->compare('female.rating', 'floor(count_winner/count*100)', true);
+//        $criteria->with=array('rating'=>array(self::STAT,  'female', 'id', 'select' => array()));
+//        $criteria->with = array('rating'=>array(self::STAT,  'female', 'id', 'select' => ''));
+//        $criteria->with = array('points'=>array('select' => array('SUM(Points) as total')));
 
-		return new CActiveDataProvider($this, array(
+
+        $sort = new CSort();
+        $sort->defaultOrder = 'name DESC';
+        $sort->attributes = array('name', 'count', 'status', 'desc');
+        $sort->attributes['rating'] = array(
+            'asc' => 'floor(count_winner/count*100)',
+            'desc' => 'floor(count_winner/count*100) desc',
+        );
+        return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+            'sort'=>$sort
 		));
 	}
 
