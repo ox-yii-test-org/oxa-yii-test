@@ -11,6 +11,8 @@ class m141008_113000_create_female_table extends CDbMigration
                 'status' => 'tinyint(1) NOT NULL',
                 'hash' => 'varchar(32) NOT NULL',
                 'image' => 'mediumblob NOT NULL',
+                'count' => 'int(15)',
+                'count_winner' => 'int(15)',
         ), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 	}
 

@@ -11,6 +11,8 @@ class m141007_065715_create_male_test_table extends CDbMigration
                 'status' => 'int(11) NOT NULL',
                 'hash' => 'varchar(32) NOT NULL',
                 'image' => 'mediumblob NOT NULL',
+                'count' => 'int(15)',
+                'count_winner' => 'int(15)',
         ), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 	}
 
