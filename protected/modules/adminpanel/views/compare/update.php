@@ -3,16 +3,16 @@
 /* @var $model Compare */
 
 $this->breadcrumbs=array(
-	'Compares'=>array('index'),
-	$model->id=>array('view','id'=>$model->id),
-	'Update',
+    'Compares'=>array('index'),
+    $model->id=>array('view','id'=>$model->id),
+    'Update',
 );
 
 $this->menu=array(
-	array('label'=>'List Compare', 'url'=>array('index')),
-	array('label'=>'Create Compare', 'url'=>array('create')),
-	array('label'=>'View Compare', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Compare', 'url'=>array('admin')),
+    array('label'=>'List Compare', 'url'=>array('index')),
+    array('label'=>'Create Compare', 'url'=>array('create')),
+    array('label'=>'View Compare', 'url'=>array('view', 'id'=>$model->id)),
+    array('label'=>'Manage Compare', 'url'=>array('admin')),
 );
 ?>
 

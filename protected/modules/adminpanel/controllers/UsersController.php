@@ -1,6 +1,6 @@
 <?php
 
-class CompareController extends Controller
+class UsersController extends Controller
 {
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class CompareController extends Controller
                 'users'=>array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('create','update','admin','delete'),
+                'actions'=>array('create','update','loadImage','delete','admin'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -47,7 +47,7 @@ class CompareController extends Controller
      */
     public function actionView($id)
     {
-        $this->render('view',array(
+        $this->render('view', array(
             'model'=>$this->loadModel($id),
         ));
     }
@@ -58,21 +58,25 @@ class CompareController extends Controller
      */
     public function actionCreate()
     {
-        $model=new Compare();
+        $model=new Users;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if(isset($_POST['Compare']))
-        {
-            $model->attributes=array_merge($_POST['Compare'], array('time' => date('Y-m-d H:i:s',time())));
+        if (isset($_POST['Users'])) {
+            $model->attributes=$_POST['Users'];
+            $uploadImage = CUploadedFile::getInstance($model, 'image');
 
-            if ($model->save()){
-                $this->redirect(array('view','id'=>$model->id));
+            if ($uploadImage) {
+                $model->image = file_get_contents($uploadImage->getTempName());
+            }
+
+            if ($model->save()) {
+                $this->redirect(array('view', 'id'=>$model->id));
             }
         }
 
-        $this->render('create',array(
+        $this->render('create', array(
             'model'=>$model,
         ));
     }
@@ -89,16 +93,17 @@ class CompareController extends Controller
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if(isset($_POST['Compare']))
-        {
-            $model->attributes=$_POST['Compare'];
+        if (isset($_POST['Users'])) {
+            $model->attributes=$_POST['Users'];
+            $uploadImage = CUploadedFile::getInstance($model, 'image');
+            $model->image = $uploadImage ? file_get_contents($uploadImage->getTempName()) : $model->image;
 
-            if($model->save()){
-                 $this->redirect(array('view','id'=>$model->id));
+            if ($model->save()) {
+                $this->redirect(array('view','id'=>$model->id));
             }
         }
 
-        $this->render('update',array(
+        $this->render('update', array(
             'model'=>$model,
         ));
     }
@@ -113,8 +118,9 @@ class CompareController extends Controller
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if(!isset($_GET['ajax']))
+        if (!isset($_GET['ajax'])) {
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        }
     }
 
     /**
@@ -122,11 +128,10 @@ class CompareController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider=new CActiveDataProvider('Compare');
-        $this->render('index',array(
+        $dataProvider=new CActiveDataProvider('Users');
+        $this->render('index', array(
             'dataProvider'=>$dataProvider,
         ));
-
     }
 
     /**
@@ -134,12 +139,13 @@ class CompareController extends Controller
      */
     public function actionAdmin()
     {
-        $model=new Compare('search');
+        $model=new Users('search');
         $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['Compare']))
-            $model->attributes=$_GET['Compare'];
+        if (isset($_GET['Users'])) {
+            $model->attributes=$_GET['Users'];
+        }
 
-        $this->render('admin',array(
+        $this->render('admin', array(
             'model'=>$model,
         ));
     }
@@ -148,29 +154,38 @@ class CompareController extends Controller
      * Returns the data model based on the primary key given in the GET variable.
      * If the data model is not found, an HTTP exception will be raised.
      * @param integer $id the ID of the model to be loaded
-     * @return Compare the loaded model
+     * @return Users the loaded model
      * @throws CHttpException
      */
     public function loadModel($id)
     {
-        $model=Compare::model()->findByPk($id);
-
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
+        $model=Users::model()->findByPk($id);
+        if ($model===null) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
         return $model;
     }
 
     /**
      * Performs the AJAX validation.
-     * @param Compare $model the model to be validated
+     * @param Users $model the model to be validated
      */
     protected function performAjaxValidation($model)
     {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='compare-form')
-        {
+        if (isset($_POST['ajax']) && $_POST['ajax']==='users-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
+    public function actionloadImage($id)
+    {
+        $model = $this->loadModel($id);
+        $this->renderPartial(
+            'image',
+            array(
+                'model' => $model
+            )
+        );
+    }
 }

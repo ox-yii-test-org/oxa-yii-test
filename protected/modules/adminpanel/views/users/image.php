@@ -1,5 +1,5 @@
 <?php
-/* @var $model Female */
+/* @var $model Users */
 
 header('Content-Type: image/*');
 print $model->image;

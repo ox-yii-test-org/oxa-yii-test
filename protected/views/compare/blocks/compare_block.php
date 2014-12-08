@@ -16,7 +16,7 @@
                     <br />
 
                     <b><?php echo CHtml::encode($modelItem->getAttributeLabel('status')); ?>:</b>
-                    <?php echo CHtml::encode(Male::getMaleStatus($modelItem->status)); ?>
+                    <?php echo CHtml::encode(Users::getUsersStatus($modelItem->status)); ?>
                     <br />
 
                     <b><?php echo CHtml::encode($modelItem->getAttributeLabel('id')); ?>:</b>

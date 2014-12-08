@@ -18,8 +18,6 @@ class m141204_074430_create_compare_table extends CDbMigration
 	public function down()
 	{
         $this->dropTable('compare');
-//		echo "m141204_074430_create_compare_table does not support migration down.\n";
-//		return false;
 	}
 
 	/*
