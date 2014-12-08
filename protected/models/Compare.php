@@ -24,7 +24,7 @@ class Compare extends CActiveRecord
         return 'compare';
     }
 
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -72,11 +72,11 @@ class Compare extends CActiveRecord
 
         $criteria=new CDbCriteria;
 
-        $criteria->compare('type',$this->type,true);
-        $criteria->compare('time',$this->time);
-        $criteria->compare('id_vouter',$this->id_vouter);
-        $criteria->compare('id_winner',$this->id_winner);
-        $criteria->compare('id_looser',$this->id_looser);
+        $criteria->compare('type', $this->type, true);
+        $criteria->compare('time', $this->time);
+        $criteria->compare('id_vouter', $this->id_vouter);
+        $criteria->compare('id_winner', $this->id_winner);
+        $criteria->compare('id_looser', $this->id_looser);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

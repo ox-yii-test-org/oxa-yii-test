@@ -1,15 +1,15 @@
 <?php
-/* @var $this CompareController */
-/* @var $model Compare */
+/* @var $this UsersController */
+/* @var $model Users */
 
 $this->breadcrumbs=array(
-    'Compare'=>array('index'),
+    'Users'=>array('index'),
     'Manage',
 );
 
 $this->menu=array(
-    array('label'=>'List Compare', 'url'=>array('index')),
-    array('label'=>'Create Compare', 'url'=>array('create')),
+    array('label'=>'List Users', 'url'=>array('index')),
+    array('label'=>'Create Users', 'url'=>array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -18,7 +18,7 @@ $('.search-button').click(function(){
     return false;
 });
 $('.search-form form').submit(function(){
-    $('#Compare-grid').yiiGridView('update', {
+    $('#users-grid').yiiGridView('update', {
         data: $(this).serialize()
     });
     return false;
@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Compares</h1>
+<h1>Manage Users</h1>
 
 <p>
 You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -35,21 +35,31 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 
 <?php echo CHtml::link('Advanced Search', '#', array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-<?php  $this->renderPartial('_search', array(
+<?php $this->renderPartial('_search', array(
     'model'=>$model,
-));  ?>
+)); ?>
 </div><!-- search-form -->
-
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-    'id'=>'Compare-grid',
+    'id'=>'users-grid',
     'dataProvider'=>$model->search(),
     'filter'=>$model,
     'columns'=>array(
-        'time',
-        'type',
-        'id_vouter',
-        'id_winner',
-        'id_looser',
+        'id',
+        array(
+            'name' => 'type',
+            'value' => 'Users::getUsersType($data->type)',
+            'filter' => array('1' => 'Male', '2' => 'Female'),
+        ),
+        'name',
+        'password',
+        'count',
+        'rating',
+        array(
+            'name' => 'status',
+            'value' => 'Users::getUsersStatus($data->status)',
+            'filter' => array('1' => 'Active', '2' => 'Inactive'),
+        ),
+        'desc',
         array(
             'class'=>'CButtonColumn',
         ),
