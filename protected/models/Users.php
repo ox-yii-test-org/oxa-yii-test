@@ -40,7 +40,7 @@ class Users extends CActiveRecord
             array('type', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'max'=>255),
             array('name', 'unique'),
-            array('name, password', 'required'),
+            array('name, password, role', 'required'),
             array('desc', 'safe'),
             array(
                 'image',
@@ -52,7 +52,7 @@ class Users extends CActiveRecord
             ),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, type, name, password, status, desc, rating, count, image', 'safe', 'on'=>'search'),
+            array('id, type, name, password, status, desc, rating, count, image, role', 'safe', 'on'=>'search'),
         );
     }
 
@@ -72,10 +72,7 @@ class Users extends CActiveRecord
     {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
-        return array(
-//            'uid'=>array(self::BELONGS_TO, 'сode', 'code_id'),
-//             'rating'=>array(self::STAT,  'Users', 'id', 'select' => 'floor(count_winner/count*100)'),
-        );
+        return array();
     }
 
     /**
@@ -92,6 +89,7 @@ class Users extends CActiveRecord
             'desc' => 'Desc',
             'hash' => 'Hash',
             'image' => 'Image',
+            'role' => 'Role',
         );
     }
 
@@ -118,6 +116,7 @@ class Users extends CActiveRecord
         $criteria->compare('password', $this->password, true);
         $criteria->compare('status', $this->status);
         $criteria->compare('type', $this->type);
+        $criteria->compare('role', $this->role);
         $criteria->compare('desc', $this->desc, true);
         $criteria->compare('count', $this->count, true);
         $criteria->compare('floor(count_winner/count*100)', $this->rating);

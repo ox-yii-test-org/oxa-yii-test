@@ -15,10 +15,7 @@ class CompareController extends Controller
             array('allow', // allow authenticated user to perform actions
                 'actions'=>array('index', 'loadImage'),
                 'users'=>array('@'),
-            ),
-            array('allow', // allow admin user to perform actions
-                'actions'=>array('index'),
-                'users'=>array('admin'),
+                'roles'=>array('user'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
@@ -98,11 +95,16 @@ class CompareController extends Controller
 
     public function getCompareModels($model)
     {
+        $statusIdActive = 1;
+
         $models = Users::model()->findAll(array(
             'order' => 'rand()',
             'limit' => 2,
-            'condition'=>'type=:typeID',
-            'params'=>array(':typeID'=>Users::getUsersTypeId($model)),
+            'condition' => "type = :typeID AND status = :statusID AND role = 'user'",
+            'params' => array(
+                ':typeID' => Users::getUsersTypeId($model),
+                ':statusID' => $statusIdActive,
+            ),
         ));
 
         return $models;

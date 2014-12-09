@@ -22,8 +22,14 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'type'); ?>
-        <?php echo $form->dropDownList($model, 'type', array('1'=>'Male', '2'=>'Female'), array('options' => array($model->type => array('selected' => true))));?>
+        <?php echo $form->dropDownList($model, 'type', array('0' => '', '1'=>'Male', '2'=>'Female'), array('options' => array($model->type => array('selected' => true))));?>
         <?php echo $form->error($model, 'type'); ?>
+    </div>
+
+    <div class="row">
+        <?php echo $form->labelEx($model, 'role'); ?>
+        <?php echo $form->dropDownList($model, 'role', array('user'=>'User', 'admin'=>'Admin'), array('options' => array($model->type => array('selected' => true))));?>
+        <?php echo $form->error($model, 'role'); ?>
     </div>
 
     <div class="row">

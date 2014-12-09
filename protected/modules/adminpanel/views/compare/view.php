@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
     'Compare'=>array('index'),
     $model->id,
 );
-//var_dump(235); exit;
+
 $this->menu=array(
     array('label'=>'List Compare', 'url'=>array('index')),
     array('label'=>'Create Compare', 'url'=>array('create')),
