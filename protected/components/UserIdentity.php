@@ -21,13 +21,13 @@ class UserIdentity extends CUserIdentity
     {
         $user = Users::model()->getUser($this->username);
 
-        if (empty($user)) {
-            $this->errorCode=self::ERROR_USERNAME_INVALID;
+        if (!$user) {
+            $this->errorCode = self::ERROR_USERNAME_INVALID;
         } elseif ($user->password != $this->password) {
-            $this->errorCode=self::ERROR_PASSWORD_INVALID;
+            $this->errorCode = self::ERROR_PASSWORD_INVALID;
         } else {
-            $this->_id=$user->id;
-            $this->errorCode=self::ERROR_NONE;
+            $this->_id = $user->id;
+            $this->errorCode = self::ERROR_NONE;
         }
 
         return !$this->errorCode;

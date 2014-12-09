@@ -95,11 +95,16 @@ class CompareController extends Controller
 
     public function getCompareModels($model)
     {
+        $statusIdActive = 1;
+
         $models = Users::model()->findAll(array(
             'order' => 'rand()',
             'limit' => 2,
-            'condition'=>'type=:typeID',
-            'params'=>array(':typeID'=>Users::getUsersTypeId($model)),
+            'condition' => "type = :typeID AND status = :statusID AND role = 'user'",
+            'params' => array(
+                ':typeID' => Users::getUsersTypeId($model),
+                ':statusID' => $statusIdActive,
+            ),
         ));
 
         return $models;
