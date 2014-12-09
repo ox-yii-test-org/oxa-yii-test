@@ -46,6 +46,11 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
     'columns'=>array(
         'id',
         array(
+            'name' => 'role',
+            'value' => '$data->role',
+            'filter' => array('user' => 'User', 'admin' => 'Admin'),
+        ),
+        array(
             'name' => 'type',
             'value' => 'Users::getUsersType($data->type)',
             'filter' => array('1' => 'Male', '2' => 'Female'),

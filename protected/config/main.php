@@ -31,7 +31,6 @@ return array(
         'adminpanel'=>array(
             'defaultController'=>'admin',
         ),
-
 	),
 
 	// application components
@@ -39,6 +38,7 @@ return array(
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
+            'class' => 'WebUser',
 		),
 		// uncomment the following to enable URLs in path-format
 		
@@ -88,6 +88,11 @@ return array(
 
 			),
 		),
+
+        'authManager' => array(
+            'class' => 'PhpAuthManager',
+            'defaultRoles' => array('guest'),
+        ),
 	),
 
 	// application-level parameters that can be accessed

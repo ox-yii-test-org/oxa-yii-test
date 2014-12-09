@@ -15,10 +15,7 @@ class CompareController extends Controller
             array('allow', // allow authenticated user to perform actions
                 'actions'=>array('index', 'loadImage'),
                 'users'=>array('@'),
-            ),
-            array('allow', // allow admin user to perform actions
-                'actions'=>array('index'),
-                'users'=>array('admin'),
+                'roles'=>array('user'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),

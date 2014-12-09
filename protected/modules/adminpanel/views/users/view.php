@@ -22,6 +22,7 @@ $this->menu=array(
     'data'=>$model,
     'attributes'=>array(
         'id',
+        'role',
         array(
             'name' => 'type',
             'value' => Users::getUsersType($model->type)
